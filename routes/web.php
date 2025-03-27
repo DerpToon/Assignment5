@@ -7,3 +7,4 @@ Route::get('/', function () {
 });
 
 Route::resource('students', StudentController::class);
+
