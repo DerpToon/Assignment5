@@ -6,7 +6,10 @@
 <!-- TODO: Add search bar here -->
 <table class="table mt-3">
     <label for="search">Search for students</label> <br>
-    <input type="search" name="search" id="search"></input>
+    <input type="search" name="search" id="search"></input> <br> <br>
+    <label for="minAge">Enter minimum and maximum age.</label> <br>
+    <input type="number" name="minAge" id="min-age" class=""></input>
+    <input type="number" name="maxAge" id="max-age"></input>
     <thead>
         <tr>
             <th>ID</th>
@@ -24,25 +27,33 @@
     $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script>
 <script>
-    $(document).ready(function(){
-        function fetch(val){
+     $(document).ready(function(){
+        function fetch(){
+            var searchVal = $('#search').val();
+            var minAge = $('#min-age').val();
+            var maxAge = $('#max-age').val();
+
             $.ajax({
                 type: "get",
-                url: '{{ route ('students.index') }}',
-                data: {search: val},
+                url: '{{ route('students.index') }}',
+                data: {
+                    search: searchVal,
+                    min_age: minAge,
+                    max_age: maxAge
+                },
                 success: function(data){
-                    console.log(data)
+                    console.log(data);
                     $('#student-table').html(data);
                 }
-            })
+            });
         }
-        $('#search').on('keyup',function(){
-            var val = $(this).val();
-            fetch(val)
-        })
 
-        fetch();
-    })
+        $('#search, #min-age, #max-age').on('keyup change', function(){
+            fetch();
+        });
+
+        fetch(); 
+    });
 </script>
 @endsection
 
