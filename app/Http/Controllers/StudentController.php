@@ -1,5 +1,5 @@
 <?php
-
+// MohammadFarran-20230053
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,30 +7,30 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
-    // Display a list of students
+ 
     public function index(Request $request)
     {   
         if ($request->ajax()) {
             $query = Student::query();
     
-            // Apply search filter if provided
+           
             if ($request->filled('search')) {
                 $query->where('name', 'LIKE', '%' . $request->search . '%');
             }
     
-            // Apply min_age filter if provided
+          
             if ($request->filled('min_age') && is_numeric($request->min_age)) {
                 $query->where('age', '>=', (int)$request->min_age);
             }
     
-            // Apply max_age filter if provided
+       
             if ($request->filled('max_age') && is_numeric($request->max_age)) {
                 $query->where('age', '<=', (int)$request->max_age);
             }
     
             $students = $query->get();
     
-            // Generate dynamic HTML for the table
+        
             $output = '';
             if ($students->count() > 0) {
                 foreach ($students as $student) {
